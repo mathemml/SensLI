@@ -157,7 +157,7 @@ for i in range(no_of_initializations):
     # train ali 1
     print('training on first ali')
     if T1:
-        model1, mb_losses1, test_errors_short1, test_errors1, exit_flag1, grad_norm1, times1 = layer_insertion_loop(
+        model1, mb_losses1, test_errors_short1, test_errors1, exit_flag1, grad_norm1, times1, sens = layer_insertion_loop(
             iters=no_iters,
             epochs=epochs,
             model=model_init,
@@ -202,7 +202,7 @@ for i in range(no_of_initializations):
     # train ali 2
     print('training on second ali')
     if T2:
-        model2, mb_losses2, test_errors_short2, test_errors2, exit_flag2, grad_norm2, times2 = layer_insertion_loop(
+        model2, mb_losses2, test_errors_short2, test_errors2, exit_flag2, grad_norm2, times2, sens = layer_insertion_loop(
             iters=no_iters,
             epochs=epochs,
             model=model_init2,

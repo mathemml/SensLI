@@ -12,7 +12,7 @@ import numpy as np
 import copy
 
 # setting path
-sys.path.append('/export/home/lkreis/experiments_with_cnns/sensitivity-based-LI-for-cnns/code')
+# your path to code
 
 
 from layer_insertion_oo import training_with_one_LI
@@ -64,20 +64,13 @@ init_vec8 = copy.deepcopy(init_vec1.data)
 ################################################################################
 # determine which trainings are run
 T1 = True
-T2 = True
-T3 = True
 T4 = True
-T5 = True
-T6 = True
-T7 = True
-T8 = True
-T9 = True
 
 # define no of training run instances
 
 no_of_initializations = 1
 
-path = f'/export/home/lkreis/experiments_with_cnns/sensitivity-based-LI-for-cnns/results_data/Exp{k}'
+path = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}'
 
 # check if repo already exists
 if os.path.exists(path):
@@ -109,7 +102,7 @@ for init in range(no_of_initializations):
             lrschedule_type='ReduceLROnPlateau', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec2, sens_norm='all',max_LIs=max_LIs)
         
-        path1 = f'/export/home/lkreis/experiments_with_cnns/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_1_{init}.json'
+        path1 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_1_{init}.json'
         Res1.save_to_json(path1)
         positions = Res1.positions
 
@@ -131,20 +124,6 @@ for init in range(no_of_initializations):
             optimizer_big, mode='max', factor=lr_args['gamma'], patience=lr_args['step_size'], verbose=False)
         
         Res4 = train_classical(model_class_big,trainloader,testloader,optimizer_big,epochs_class,scheduler_big,save_grad_norms=True)
-        path4 = f'/export/home/lkreis/experiments_with_cnns/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_4_{init}.json'
+        path4 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_4_{init}.json'
         Res4.save_to_json(path4)
 
-    # train classical small
-    if T3:
-        print('T3:')
-        model_class_small = build_vgg_baseline(BN,m=m)
-        torch.nn.utils.vector_to_parameters(init_vec4, model_class_small.parameters())
-        #optimizer_small = torch.optim.SGD(model_class_small.parameters(),lr_class_small,momentum = 0.9, weight_decay=5e-4)
-        optimizer_small = torch.optim.Adam(model_class_small.parameters(),lr_class_small)
-        scheduler_small = torch.optim.lr_scheduler.ReduceLROnPlateau(
-            optimizer_small, mode='max', factor=lr_args['gamma'], patience=lr_args['step_size'], verbose=False)
-        
-        Res3 = train_classical(model_class_small,trainloader,testloader,optimizer_small,epochs_class,scheduler_small,
-                                                    save_grad_norms=True)
-        path3 = f'/export/home/lkreis/experiments_with_cnns/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_3_{init}.json'
-        Res3.save_to_json(path3)

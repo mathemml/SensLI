@@ -184,7 +184,7 @@ for i in range(no_of_initializations):
         # save losses1 and final accuracy1
         write_losses(path1,
                      mb_losses1, max_length, end_list, test_errors1,
-                     interval_testerror=interval_testerror, times=times1,grad_norms = grad_norm1, its_per_epoch=no_steps_per_epoch, sens=sens1)    # save losses3
+                     interval_testerror=interval_testerror, times=times1,grad_norms = grad_norm1, its_per_epoch=no_steps_per_epoch)    # save losses3
 
         # full_list_of_losses_1.append(mb_losses)
         final_testerror1.append(test_errors_short1[-1])
@@ -228,7 +228,7 @@ for i in range(no_of_initializations):
         # save losses2
         write_losses(f'results_data_spirals/Exp{k}_2.json',
                      mb_losses2, max_length, end_list, test_errors2, interval_testerror=interval_testerror, times=times2, grad_norms = grad_norm2,
-                     its_per_epoch=no_steps_per_epoch, sens=sens2)
+                     its_per_epoch=no_steps_per_epoch)
         # full_list_of_losses_2.append(mb_losses2)
         final_testerror2.append(test_errors_short2[-1])
 
