@@ -28,7 +28,7 @@ def training_with_one_LI(epochs, traindataloader, testdataloader,BN=False, optim
         torch.nn.utils.vector_to_parameters(init, VGG.model.parameters())
 
     if optimizer_type == 'SGD':
-        optimizer = torch.optim.SGD(VGG.model.parameters(), lr_init, momentum=0.9, weight_decay=5e-3)#4)
+        optimizer = torch.optim.SGD(VGG.model.parameters(), lr_init, momentum=0.9, weight_decay=5e-4)
     if optimizer_type == 'Adam':
         optimizer = torch.optim.Adam(VGG.model.parameters(), lr_init)
 

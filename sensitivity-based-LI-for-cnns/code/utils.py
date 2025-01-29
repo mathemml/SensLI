@@ -26,7 +26,6 @@ def is_freezed(p, freezed):
          boolean
     '''
     for freezed_p in freezed:
-        # print(p.shape, freezed_p.shape)
         try:
             if p is freezed_p:
                 return True

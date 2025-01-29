@@ -1,7 +1,7 @@
 import torch.nn as nn
 
 def init_vgg(model_baseline):
-
+    # no specififc initalization for now
     return model_baseline
 
 def build_vgg_baseline(BN=False, small = False, m=None):
@@ -64,12 +64,6 @@ class VGG(nn.Module):
         return x
     
 
-#model = VGG()
-#print(model)
-
-
-
-
 
 def get_fullext_model(old_model):
     old_child=None # from last iteration
@@ -101,18 +95,6 @@ def get_fullext_model(old_model):
         
     net = nn.Sequential(*list_fullyext_children)
     return net
-
-if False:
-    model = build_vgg_baseline(BN=False)
-    for i, child in enumerate(model.children()):
-        for j, subchild in enumerate(child.children()):
-            print(f'i={i},j={j} {subchild}\n')
-
-    fe_model = get_fullext_model_new(model)
-    print(fe_model)
-
-    fe_model2 = get_fullext_model(BN=False)
-    print(fe_model2)
 
 
 def extend_VGG(position, BN=False): # only relevant for manual layer insertion
@@ -190,7 +172,7 @@ def extend_VGG(position, BN=False): # only relevant for manual layer insertion
             return x
     
     model = VGG_ext(BN, position)
-    print(f'Attention! new weight has no identity layer iniitaliaztion but random!')
+    print(f'Attention! new weight has no identity layer initialization but random!')
     return model
 
 def extend_VGG_new(old_model, position, BN=False):
@@ -244,10 +226,23 @@ def extend_VGG_new(old_model, position, BN=False):
     #print(f'Attention! new weight has no identity layer iniitaliaztion but random!')
     return model
             
-if False:
-    model = build_vgg_baseline(BN=False)
-    model_ext = extend_VGG_new(model, position=0, BN=False)   
-    print(model_ext)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ############################ not relevant #################################################
@@ -448,14 +443,6 @@ def get_fullext_model_small(m):
 
 
 
-
-# BN=False
-
-# model_class_big = extend_VGG(position=0,BN=BN)
-# model_class_big = extend_VGG_new(model_class_big, position=2,BN=BN)
-# model_class_big = extend_VGG_new(model_class_big,position=4,BN=BN)
-
-# print(model_class_big)
 
 
 

@@ -108,7 +108,6 @@ def layer_insertion_loop(
         mb_losses_total = mb_losses_total + mb_losses1
         times1_updated = [i + end_time for i in times1]
         times_total = times_total + times1_updated
-        # grad_norms_total = grad_norms_total + grad_norms
         grad_norms_total.append(grad_norms)
 
         
@@ -144,8 +143,6 @@ def layer_insertion_loop(
         free_norms, freezed_norms, mb_losses2 = calculate_shadowprices_minibatch(
             train_dataloader, model_tmp, freezed)
 
-        # mb_losses_total = mb_losses_total+mb_losses2
-        # mb_losses_total = mb_losses_total + [sum(mb_losses2)/len(mb_losses2)] # uncommenting this gives a double iterate
 
         # select new model based on the shadow prices
         # insert one frozen layer and unfreeze, delete other frozen layers
@@ -167,14 +164,14 @@ def layer_insertion_loop(
                     values_at_li.append(torch.linalg.norm(p.data))
                     print(values_at_li)
 
-            original_stdout = sys.stdout
-            path = f'val_at_li{get_timestamp()}.txt'
-            with open(path, 'w') as f:
-                sys.stdout = f
-                print(
-                    f'norm of values of parameters (parameter-wise) at layer insertion: {values_at_li}')
-                # Reset the standard output
-                sys.stdout = original_stdout
+            # original_stdout = sys.stdout
+            # path = f'val_at_li{get_timestamp()}.txt'
+            # with open(path, 'w') as f:
+            #     sys.stdout = f
+            #     print(
+            #         f'norm of values of parameters (parameter-wise) at layer insertion: {values_at_li}')
+            #     # Reset the standard output
+            #     sys.stdout = original_stdout
 
         lr = decrease_after_li * lr_end_lastloop  # decrease lr for next loop
 
@@ -216,7 +213,6 @@ def layer_insertion_loop(
     times2_updated = [i + end_time for i in times2]
 
     times_total = times_total + times2_updated
-    # grad_norms_total = grad_norms_total + grad_norms
     grad_norms_total.append(grad_norms)
 
     test_err_list2 = test_err_list2 + test_error_l2

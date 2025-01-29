@@ -1,4 +1,6 @@
 import json
+import sys 
+import os
 
 
 def write_losses(path, losses, max_length, structures=None, errors=None, interval_testerror=None, times=None, grad_norms = None, its_per_epoch=1):
@@ -104,5 +106,6 @@ def write_losses(path, losses, max_length, structures=None, errors=None, interva
                                     'grad_norms': grad_norms}
 
 
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     with open(path, 'w') as file:
         json.dump(data, file)

@@ -7,7 +7,6 @@ import numpy as np
 
 import utils
 import nets
-#from data_preparation import prep_cifar10
 import backpack
 
 
@@ -382,7 +381,7 @@ class ExtendableModel:
 
             with torch.no_grad():
                 for layer in self._get_new_layer_iterator():
-                    if hasattr(layer, 'weight'): #and isinstance(layer, torch.nn.Conv2d):
+                    if hasattr(layer, 'weight'): 
                         layer.sensitivities_w += layer.weight.grad.cpu()
                         if layer.bias is not None:
                             layer.sensitivities_b += layer.bias.grad.cpu()
@@ -472,7 +471,7 @@ class ExtendableModel:
         return layer.sensitivity_w / utils.prod(layer.weight.shape)
     
     def full_grad_sq_scaled(self):
-        if self.use_kfac: # todo anfang
+        if self.use_kfac: 
             g = 0
             for p in self.fully_ext_model.parameters():
                 if hasattr(p, 'sum_grad_squared'):
@@ -480,7 +479,7 @@ class ExtendableModel:
                     g += torch.sum(torch.square(p.grad))/no
                     
             self.ext_full_grad_sq_scaled = g
-            return g # todo ende
+            return g 
         else:
             g=0
             no =0
@@ -686,21 +685,13 @@ class VGGExtendableModel(ExtendableModel):
 
         return norm
 
-    def _handle_new_layer_list(self, new_layer_list): #TODO
+    def _handle_new_layer_list(self, new_layer_list): 
         """
         Handle the new layer list after selecting a layer.
 
         Args:
             new_layer_list: The new layer list.
         """
-        # if self.BN:
-        #     layer_feat = new_layer_list[:15]
-        #     # 15 is flatten which is not needed in baseline
-        #     layer_class = new_layer_list[16:]
-        # else:
-        #     layer_feat = new_layer_list[:11]
-        #     # 11 is flatten which is not needed in baseline
-        #     layer_class = new_layer_list[12:]
 
         layer_feat = []
         layer_class = []
@@ -758,8 +749,6 @@ class VGGExtendableModel(ExtendableModel):
             old_layer: The layer from the original VGG model.
             new_layer: The layer in the fully extended VGG model.
         """
-        #print('Old', old_layer)
-        #print('New', new_layer)
         if not hasattr(old_layer, 'weight'):
             return
         new_layer.weight.copy_(old_layer.weight)
@@ -804,13 +793,6 @@ class VGGExtendableModel(ExtendableModel):
 
 
 
-# x1,x2 = prep_cifar10()
-# ExtMod = VGGExtendableModel(BN=False)
-# ExtMod.fully_extend()
-# ExtMod.calculate_shadow_prices_mb(x2)
-# ExtMod.select_new_model(rule='abs max')
-# print(ExtMod.ext_model_layer_grads)
-    
 
 class SmallVGGExtendableModel(ExtendableModel):
     """
@@ -999,8 +981,6 @@ class SmallVGGExtendableModel(ExtendableModel):
             old_layer: The layer from the original VGG model.
             new_layer: The layer in the fully extended VGG model.
         """
-        #print('Old', old_layer)
-        #print('New', new_layer)
         if not hasattr(old_layer, 'weight'):
             return
         new_layer.weight.copy_(old_layer.weight)

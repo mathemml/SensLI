@@ -12,8 +12,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import numpy as np
 import copy
 
-# setting path
-# your path to code
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'code'))
 
 
 from layer_insertion_oo import training_with_one_LI
@@ -84,7 +83,7 @@ T9 = True
 
 no_of_initializations = 1 
 
-path = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}'
+path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}')
 
 # check if repo already exists
 if os.path.exists(path):
@@ -114,7 +113,7 @@ for init in range(no_of_initializations):
             lrschedule_type='StepLR', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec2)
         
-        path1 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_1_{init}.json'
+        path1 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_1_{init}.json')
         Res1.save_to_json(path1)
 
     # absmax
@@ -126,7 +125,7 @@ for init in range(no_of_initializations):
             lrschedule_type='StepLR', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec3)
         
-        path2 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_2_{init}.json'
+        path2 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_2_{init}.json')
         Res2.save_to_json(path2)
 
     # absmax
@@ -138,7 +137,7 @@ for init in range(no_of_initializations):
             lrschedule_type='StepLR', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec4)
         
-        path2 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_3_{init}.json'
+        path2 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_3_{init}.json')
         Res3.save_to_json(path2)
 
     # absmax
@@ -150,7 +149,7 @@ for init in range(no_of_initializations):
             lrschedule_type='StepLR', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec5)
         
-        path2 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_4_{init}.json'
+        path2 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_4_{init}.json')
         Res4.save_to_json(path2)
 
     # absmax
@@ -162,7 +161,7 @@ for init in range(no_of_initializations):
             lrschedule_type='StepLR', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec6)
         
-        path2 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_5_{init}.json'
+        path2 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_5_{init}.json')
         Res5.save_to_json(path2)
 
     # absmax
@@ -174,7 +173,7 @@ for init in range(no_of_initializations):
             lrschedule_type='StepLR', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec7)
         
-        path2 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_6_{init}.json'
+        path2 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_6_{init}.json')
         Res6.save_to_json(path2)
 
     # absmax
@@ -186,7 +185,7 @@ for init in range(no_of_initializations):
             lrschedule_type='StepLR', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec8)
         
-        path2 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_7_{init}.json'
+        path2 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_7_{init}.json')
         Res7.save_to_json(path2)
 
     # absmax
@@ -198,7 +197,7 @@ for init in range(no_of_initializations):
             lrschedule_type='StepLR', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec9)
         
-        path2 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_8_{init}.json'
+        path2 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_8_{init}.json')
         Res8.save_to_json(path2)
 
     # train classical small
@@ -213,7 +212,7 @@ for init in range(no_of_initializations):
         
         Res9 = train_classical(model_class_small,trainloader,testloader,optimizer_small,epochs_class,scheduler_small,
                                                     save_grad_norms=True)
-        path3 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_9_{init}.json'
+        path3 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_9_{init}.json')
         Res9.save_to_json(path3)
 
 

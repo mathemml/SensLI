@@ -262,23 +262,17 @@ def select_new_model(avg_grad_norm, freezed_norms, model, freezed, kwargs_net, m
                     continue
                 # check only linear layers or activation functions
                 if isinstance(child, torch.nn.Linear) or isinstance(child, kwargs_net['act_fun']):
-                    # print(f'frist case type of child {child}')
                     new_model_children_list.append(child)
                     continue
                 if not _is_freezed(child.l2.weight, freezed):
-                    # print(f'second case type of child {child}')
                     new_model_children_list.append(child)
                     continue
                 if v1 and child.l2.weight is best_layer_weight:
-                    # print(f'third case type of child {child}')
-                    # print(f'best layer weight is used')
                     child_for_return = child
                     new_model_children_list.append(child)
                     continue
 
                 if v2 and child.l1.weight is best_layer_weight:  # for alternative param init
-                    # print(f'third case type of child {child}')
-                    # print(f'best layer weight is used')
                     child_for_return = child
                     new_model_children_list.append(child)
                     continue
@@ -357,7 +351,7 @@ def select_new_model(avg_grad_norm, freezed_norms, model, freezed, kwargs_net, m
                     new_kwargs_net['dim_hidden_layers'].append(
                         new_model_children_list[k - 1].out_features)
 
-        if _type == 'res2':  # todo für v1 v2 handlen!
+        if _type == 'res2': 
             # weight parameter corresponding to max_index
             if v1:
                 best_layer_weight = freezed[2 + 3 * max_index]
@@ -372,16 +366,12 @@ def select_new_model(avg_grad_norm, freezed_norms, model, freezed, kwargs_net, m
                     continue
                 # check only linear layers or activation functions
                 if isinstance(child, torch.nn.Linear) or isinstance(child, kwargs_net['act_fun']):
-                    # print(f'frist case type of child {child}')
                     new_model_children_list.append(child)
                     continue
                 if not _is_freezed(child.l2.weight, freezed):
-                    # print(f'second case type of child {child}')
                     new_model_children_list.append(child)
                     continue
                 if child.l2.weight is best_layer_weight:
-                    # print(f'third case type of child {child}')
-                    # print(f'best layer weight is used')
                     child_for_return = child
                     new_model_children_list.append(child)
                     continue
@@ -477,16 +467,12 @@ def select_new_model(avg_grad_norm, freezed_norms, model, freezed, kwargs_net, m
                     continue
                 # check only linear layers or activation functions
                 if isinstance(child, torch.nn.Linear) or isinstance(child, kwargs_net['act_fun']):
-                    # print(f'frist case type of child {child}')
                     new_model_children_list.append(child)
                     continue
                 if not _is_freezed(child.l2.weight, freezed):
-                    # print(f'second case type of child {child}')
                     new_model_children_list.append(child)
                     continue
                 if child.l2.weight is best_layer_weight:
-                    # print(f'third case type of child {child}')
-                    # print(f'best layer weight is used')
                     child_for_return = child
                     new_model_children_list.append(child)
                     continue
@@ -540,7 +526,7 @@ def select_new_model(avg_grad_norm, freezed_norms, model, freezed, kwargs_net, m
         if len(max_indices)==1:
             max_index = max_indices[0]
 
-        if len(max_indices) > 1:  # TODO: handle insertion of multiple layers
+        if len(max_indices) > 1:  # TODO for future: handle insertion of multiple layers
             # for now we only choose the first one
             max_index = max_indices[0]
 
@@ -626,16 +612,12 @@ def select_new_model(avg_grad_norm, freezed_norms, model, freezed, kwargs_net, m
                     continue
                 # check only linear layers or activation functions
                 if isinstance(child, torch.nn.Linear) or isinstance(child, kwargs_net['act_fun']):
-                    # print(f'frist case type of child {child}')
                     new_model_children_list.append(child)
                     continue
                 if not _is_freezed(child.l2.weight, freezed):
-                    # print(f'second case type of child {child}')
                     new_model_children_list.append(child)
                     continue
                 if child.l2.weight is best_layer_weight:
-                    # print(f'third case type of child {child}')
-                    # print(f'best layer weight is used')
                     child_for_return = child
                     new_model_children_list.append(child)
                     continue

@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 
+# ONLY NECESSARY FOR C2-RELU APPROXIMATION ############################
 
 # if you want to use a different epsilon in the activation function below,
 # the change must also be made in the file model_utils.py in freeze parameters!

@@ -11,9 +11,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import numpy as np
 import copy
 
-# setting path
-# your path to code
-
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'code'))
 
 from layer_insertion_oo import training_with_one_LI
 from training_oo import train_classical
@@ -70,7 +68,8 @@ T4 = True
 
 no_of_initializations = 1
 
-path = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}'
+path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}')
+
 
 # check if repo already exists
 if os.path.exists(path):
@@ -102,7 +101,7 @@ for init in range(no_of_initializations):
             lrschedule_type='ReduceLROnPlateau', lrscheduler_args=lr_args, 
             decrease_lr_after_li=1.,save_grad_norms=True, init=init_vec2, sens_norm='all',max_LIs=max_LIs)
         
-        path1 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_1_{init}.json'
+        path1 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_1_{init}.json')
         Res1.save_to_json(path1)
         positions = Res1.positions
 
@@ -118,12 +117,11 @@ for init in range(no_of_initializations):
         for i in range(len(positions)-1):
             model_class_big = extend_VGG_new(model_class_big, position=positions[i+1],BN=BN)
         
-        #optimizer_big = torch.optim.SGD(model_class_big.parameters(),lr_class_big,momentum = 0.9, weight_decay=5e-4)
         optimizer_big = torch.optim.Adam(model_class_big.parameters(),lr_class_big)
         scheduler_big = torch.optim.lr_scheduler.ReduceLROnPlateau(
             optimizer_big, mode='max', factor=lr_args['gamma'], patience=lr_args['step_size'], verbose=False)
         
         Res4 = train_classical(model_class_big,trainloader,testloader,optimizer_big,epochs_class,scheduler_big,save_grad_norms=True)
-        path4 = f'yourpath/sensitivity-based-LI-for-cnns/results_data/Exp{k}/Exp{k}_4_{init}.json'
+        path4 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data/Exp{k}/Exp{k}_4_{init}.json')
         Res4.save_to_json(path4)
 

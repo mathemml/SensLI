@@ -335,9 +335,7 @@ def gen_spiral_dataset(batchsize,N, r0, circles):
             # file name is used as the key to retrieve the class label value
             y = torch.tensor(self.labels[ID])
             # Apply one-hot encoding to the class label
-            #y_ohe = torch.tensor([y])
             y_ohe = y
-            #y_ohe = torch.nn.functional.one_hot(y, num_classes=1).float()
 
             return X, y_ohe
 
@@ -413,10 +411,6 @@ def plot_decision_boundary(model, features, labels, save_plot=None):
     # Z = Z.detach().cpu().numpy()[:,1] # displays values of output in y axis
     Z_cat = Z_cat.reshape(XX.shape)
     Z_max_val = Z_max_val.reshape(XX.shape)
-    # print(Z.shape)
-    # print(Z[0,:])
-    # print(Z[:,0])
-    # fig = plt.figure()
     plt.contourf(XX, YY, Z_cat, cmap='gray', alpha=0.8)  # plt.cm.Spectral
     # sns.countplot(Z_max_val, hue = Z_cat)
     plt.scatter(features[:, 0], features[:, 1],

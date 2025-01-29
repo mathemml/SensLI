@@ -8,12 +8,13 @@ import numpy as np
 from torch import nn
 import matplotlib.pyplot as plt
 
-sys.path.append('../layer_insertion_sensitivity_based')
+from save_to_json import write_losses
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from layer_insertion_loop import layer_insertion_loop
 from train_and_test_ import train, check_testerror
 from nets import feed_forward, two_weight_resnet, one_weight_resnet
-from save_to_json import write_losses
 from spirals_data_new import gen_spiral_dataset, plot_decision_boundary
 
 # ################# fix hyperparameters ###################################
@@ -21,7 +22,7 @@ from spirals_data_new import gen_spiral_dataset, plot_decision_boundary
 # for checking the progress of the training in the terminal, use the bash command: jp length filename.json
 # to see how many runs are already saved
 
-k = 0000
+k = 0
 
 # seed
 s=1
@@ -97,7 +98,7 @@ no_of_initializations = 1
 
 # declare path where json files are saved
 
-path1 = f'results_data_spirals/Exp{k}.json'
+path1 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data_spirals/Exp{k}_1.json')
 if os.path.isfile(path1):
     print(f' file with path {path1} already exists!')
     quit()
@@ -150,7 +151,7 @@ for i in range(no_of_initializations):
         plot_decision_boundary(model_classical2, data_X, data_y)
 
         # save losses3
-        write_losses(f'results_data_spirals/Exp{k}_4.json', mblosses_classical2, max_length, structures=[
+        write_losses(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data_spirals/Exp{k}_4.json'), mblosses_classical2, max_length, structures=[
                     epochs_classical], errors=test_error_classical2,
                     interval_testerror=interval_testerror, exit_flag=exit_flag4,
                     grad_norms= grad_norm4,

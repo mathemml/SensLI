@@ -83,8 +83,6 @@ def train(model, train_dataloader, epochs, optimizer, scheduler, wanted_testerro
         tic = time.time()
         # print(f'epoch number {e+1}')
         for batch, (X, y) in enumerate(train_dataloader):
-            #print(X.shape)
-            #print(y.shape)
             model.zero_grad()
             loss = loss_fn(model(X), y)
             loss.backward()
@@ -109,11 +107,10 @@ def train(model, train_dataloader, epochs, optimizer, scheduler, wanted_testerro
                 lr = optimizer.param_groups[0]['lr']
                 for p in model.parameters():
                     grad_norms_layerwise[layer].append(
-                        lr*torch.square(p.grad).sum().numpy()) # old was lr after norm
+                        lr*torch.square(p.grad).sum().numpy()) 
                     layer += 1
                 for p in model.parameters():
                     norm += torch.square(p.grad).sum()
-                # print(norm)
                 grad_norms.append(norm)
 
             # ggf print loss
@@ -136,19 +133,19 @@ def train(model, train_dataloader, epochs, optimizer, scheduler, wanted_testerro
 
             optimizer.step()
 
-            if use_adaptive_lr: ##### new beginning
+            if use_adaptive_lr: 
                     with torch.no_grad():
                         step_norm_sq=torch.tensor(0.)
                         for p in model.parameters():
                             step_norm_sq.add_((p.grad ** 2).sum())
-                        loss_new = loss_fn(model(X), y)#loss_fn(model(data_x[batch]), data_y[batch])
+                        loss_new = loss_fn(model(X), y)
 
                         omega_new = 2 * (loss_new - loss + lr *
                                         step_norm_sq) / (lr ** 2 * step_norm_sq)
                         if omega_new < omega_min:
                             omega_new = omega_min
                         omega = discont * omega + (1 - discont) * omega_new
-                        lr = discont * lr + (1 - discont) * 1/omega ################ new end
+                        lr = discont * lr + (1 - discont) * 1/omega 
                         optimizer.param_groups[0]['lr'] = lr
 
         toc = time.time()

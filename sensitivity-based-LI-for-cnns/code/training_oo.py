@@ -151,18 +151,6 @@ def json_to_obj(path, obj='LI'):
     return Res
 
 
-
-# Test = ResultLI()
-# Test.add_all([1,1,2,3],[9,8,9,8],[0.1,0.2,0.3,0.4],[0.01,0.02,0.005,0.002])
-# Test.add_position(0)
-# Test.add_insertion_time(0.005)
-# Test.add_sensitivities([0.02,0.004,0.1])
-
-# Test.save_to_json('test.json')
-# New = json_to_obj('test.json', obj='LI')
-# print(New.pos)
-
-
 def train_classical(model, traindataloader,testdataloader, optimizer, no_epochs, scheduler, stopping_criterion=None, save_grad_norms=False):
     losses, test_accs,train_accs, times, grad_norms_layerwise = train(model, traindataloader,testdataloader, optimizer, no_epochs, scheduler, stopping_criterion=stopping_criterion, save_grad_norms=save_grad_norms)
     Res = ResultClassical()

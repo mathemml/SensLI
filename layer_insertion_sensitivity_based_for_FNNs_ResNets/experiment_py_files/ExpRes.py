@@ -7,12 +7,13 @@ import sys
 import numpy as np
 from torch import nn
 
-sys.path.append('../layer_insertion_sensitivity_based')
+from save_to_json import write_losses
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from layer_insertion_loop import layer_insertion_loop
 from train_and_test_ import train, check_testerror
 from nets import feed_forward, two_weight_resnet, one_weight_resnet
-from save_to_json import write_losses
 from spirals_data_new import gen_spiral_dataset
 
 # ################# fix hyperparameters ###################################
@@ -42,7 +43,7 @@ _type = 'res2'
 act_fun = nn.Tanh
 interval_testerror = 1
 
-batchsize = 45 #450 # fullbatch
+batchsize = 45 #450 #450 is fullbatch
 no_per_class = 300
 r0=0.5
 circles = 1
@@ -58,7 +59,7 @@ end_list = []
 for i, e in enumerate(epochs):
     end_list.append(e)
     end_list.append(1)
-end_list.pop()  # removes last 1 which was too much
+end_list.pop() 
 
 
 
@@ -120,7 +121,7 @@ T4 = True
 
 # define no of training run instances
 
-no_of_initializations = 1  # 50
+no_of_initializations = 1  
 
 # set up empty lists for saving the observed quantities
 # (besides the save to the json file)
@@ -132,7 +133,7 @@ final_testerror4 = []
 
 # declare path where json files are saved
 
-path1 = f'results_data_spirals/Exp{k}_1.json'
+path1 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data_spirals/Exp{k}_1.json')
 if os.path.isfile(path1):
     print(f' file with path {path1} already exists!')
     quit()

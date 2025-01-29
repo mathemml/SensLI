@@ -10,20 +10,14 @@ from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor
 
-#sys.path.append('../layer_insertion_sensitivity_based')
-# Get the directory of the current file
-current_dir = os.path.dirname(os.path.abspath(__file__))
+from save_to_json import write_losses
 
-# Construct the path to the parent directory
-parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
-
-# Add the constructed path to the Python path
-sys.path.append(parent_dir)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from layer_insertion_loop import layer_insertion_loop
 from train_and_test_ import train, check_testerror
 from nets import feed_forward, two_weight_resnet, one_weight_resnet
-from save_to_json import write_losses
+
 
 
 # ################# fix hyperparameters ###################################
@@ -157,7 +151,7 @@ no_of_initializations = 1
 
 # declare path where json files are saved
 
-path1 = f'results_data_spirals/Exp{k}_1.json'
+path1 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data_spirals/Exp{k}_1.json')
 if os.path.isfile(path1):
     print(f' file with path {path1} already exists!')
     quit()
@@ -219,7 +213,7 @@ for i in range(no_of_initializations):
                                                                  )
         if save_data:
             # save losses3
-            write_losses(f'results_data_spirals/Exp{k}_3.json', mblosses_classical, max_length, structures=[
+            write_losses(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), f'results_data_spirals/Exp{k}_3.json'), mblosses_classical, max_length, structures=[
                         epochs_classical], errors=test_error_classical,
                         interval_testerror=interval_testerror, times=times3, grad_norms = grad_norm3,
                         its_per_epoch=no_steps_per_epoch)

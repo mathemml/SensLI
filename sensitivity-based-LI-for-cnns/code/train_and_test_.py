@@ -20,7 +20,7 @@ def train(model, traindataloader,testdataloader, optimizer, no_epochs, scheduler
             #os.mkdir(heatmappathvals)
     ################################################################################################
 
-    # TODO stopping criterion
+
     if stopping_criterion is not None:
         raise Exception('Sorry, stopping criteria are not implemented yet!')
     
@@ -64,7 +64,7 @@ def train(model, traindataloader,testdataloader, optimizer, no_epochs, scheduler
                             filename = f'{heatmappathgrads}grads_epoch{e}_batch{batch_idx}_param{i}.txt'
                             np.savetxt(filename, p.grad.data.detach().view(30,30).numpy())
             ################################################################################################
-            with torch.no_grad(): # NEW
+            with torch.no_grad(): 
                 if save_grad_norms: 
                     norm = 0
                     layer = 0
