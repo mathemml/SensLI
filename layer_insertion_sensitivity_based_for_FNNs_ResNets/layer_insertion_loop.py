@@ -14,33 +14,33 @@ def layer_insertion_loop(
         check_testerror_between=None, decrease_after_li=1., print_param_flag=False, start_with_backtracking=None,
         v2=False, save_grad_norms=False, use_adaptive_lr=False):
     '''
-    implements training loop for (adaptive) layer insertion and minibatch SGD
+    implements training loop for SensLI for fully-connected neural networks.
 
     Args:
             iters (int): number of layer insertions which are done
             epochs (int or list): maximum number of epochs which are performed during the learning
-            model: pytorch net. should be either a resnet with two weights or a feedforward net 
+            model: pytorch model. should be either a resnet with two weights or a feedforward net 
             kwargs_net (dict): dict specifying the 4 keys hidden_layers, dim_hidden_layers, act_fun and type
-            dim_in (int): (flattened) dimesion of the images
+            dim_in (int): (flattened) dimension of the images
             dim_out (int): number of classes
             train_dataloader: iterable from pytorch containing the training data
             test_dataloader: iterable from pytorch containing the test data
             lr_init : inital learning rate
             wanted_test_error (float): test error until we want to train (optimally). default 0.5
-            mode (string): either 'abs min' or 'abs max' , 'pos 0' or 'threshold, indicating whether the layer with th largest (theory)
-            or smallest (comparison) lagrange multipliers are chosen in model selection. default is 'abs max'
-            optimizer_type (string): so far only 'SGD' is implemented
-            lrschedule_type (string): so far only 'StepLR' is implemented
+            mode (string): either 'abs min' or 'abs max' , 'pos 0' or 'threshold', indicating whether the layer with the largest (theory)
+            or smallest (comparison) lagrange multipliers are chosen in model selection. default is 'abs max'. 'threshold' implements the when-to-insert-criterion.
+            optimizer_type (string): so far only 'SGD' and 'Adam' is implemented
+            lrschedule_type (string): so far only 'StepLR', 'MultiStepLR' is implemented
             lrscheduler_args (default None): dict which contains the hyperparameters needed by the lrscheduler
             check_testerror_between (None or int): if none, the testerror is noct checked while training on a model.
-            If an integer is specified, e.g. k=1, the after k epochs, the testerror is checked during training on one model.
-            decrease_after_li: factor by which the current lr is decreased after a new layer is inserted.
-            print_param_flag (default False): if True, prints the parameter gradients for the first 10 epochs
+            If an integer is specified, e.g. k=1, then after k epochs, the testerror is checked during training on one model.
+            decrease_after_li (float): factor by which the current lr is decreased after a new layer is inserted.
+            print_param_flag (default False): if True, prints the parameter gradients for the first 10 epochs.
             start_with_backtracking (None or int): if None, there is  no backtracking performed, if it is an integer k ,
             then for the first k epochs, backtracking is performed after the layer insertion.
-            v2: default: False
+            v2: default: False, controls init of resnet at layer insertion. use only if you know the code.
             save_grad_norms: (bool) default False. If True, saves the averaged layerwise squared norm of the gradient in each step of the optimizer during training.
-            use_adaptive_lr (bool): default False. If True, uses an adaptive learning rate scheme suggested by Frederik Köhne
+            use_adaptive_lr (bool): default False. If True, uses an adaptive learning rate scheme.
 
 
     Out:
@@ -51,6 +51,7 @@ def layer_insertion_loop(
         exit_flag: 0 or 1. 1 indicates that wanted testerror was reached during training
         grad_norms_total: list of list ov layerwise avergae gradients for all iterations
         times_total: times needed for each iteration
+        sens: list of the sensitivities of the positions
 
     '''
 

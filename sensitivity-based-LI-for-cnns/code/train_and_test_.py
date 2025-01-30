@@ -9,6 +9,23 @@ import os
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def train(model, traindataloader,testdataloader, optimizer, no_epochs, scheduler, stopping_criterion=None, save_grad_norms=True, kfac_precond =None):
+    """
+    Trains a model using the provided data loaders, optimizer, and scheduler.
+
+    Parameters:
+    model (torch.nn.Module): The model to be trained.
+    traindataloader (DataLoader): DataLoader for the training data.
+    testdataloader (DataLoader): DataLoader for the test data.
+    optimizer (torch.optim.Optimizer): Optimizer for training the model.
+    no_epochs (int): Number of epochs to train the model.
+    scheduler (torch.optim.lr_scheduler): Learning rate scheduler.
+    stopping_criterion (callable, optional): Function to determine when to stop training. Default is None. Not implemented yet.
+    save_grad_norms (bool, optional): Whether to save gradient norms. Default is True.
+    kfac_precond (optional): KFAC preconditioner. Default is None. Use only if you know the code.
+
+    Returns:
+    losses, test_accs, train_accs, times, grad_norms_layerwise
+    """
     ################################################################################################
     save_heatmaps = False
     if save_heatmaps:

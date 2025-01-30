@@ -21,12 +21,12 @@ def train(model, train_dataloader, epochs, optimizer, scheduler, wanted_testerro
     implements (optionally) frozen-parameter constrained training for a feedforward net.
 
     Args:
-        model: model with frozen (or no frozen) parameters
+        model: pytorch model
         train_dataloader: iterable from pytorch containing the training data
         epochs (int): number of epochs, in which we want to train equality constrained. default 1
         optimizer: optimizer, e.g. torch.nn.optim.SGD
         scheduler: lr scheduler, e.g. torch.nn.optim.lr_scheduler.StepLR
-        wanted_testerror: between 100 and 0 indicating which testerror is sufficient to stop.
+        wanted_testerror (float): between 100 and 0 indicating which testerror is sufficient to stop.
         start_with_backtracking (None or int): if None, there is  no backtracking performed, if it is an integer k ,
             then for the first k epochs, backtracking is performed after the layer insertion.
         check_testerror_between (None or int): if none, the testerror is noct checked while training on a model.

@@ -5,10 +5,41 @@ from model_selection_oo import VGGExtendableModel, SmallVGGExtendableModel
 from train_and_test_ import train
 from training_oo import ResultLI
 
+
+                        
+                        
+    
 def training_with_one_LI(epochs, traindataloader, testdataloader,BN=False, optimizer_type='SGD', lr_init=0.1,
                          mode='abs max', stopping_criterion=None,lrschedule_type='StepLR', lrscheduler_args=None,
-                         decrease_lr_after_li=1.,save_grad_norms=True, init=None, use_kfac = False, sens_norm = 'fro_squared_scaled',
+                         decrease_lr_after_li=1.,save_grad_norms=True, init=None, use_kfac = False, sens_norm = 'all',
                          architecture='VGG', m=[64,128,256], max_LIs=1):
+    
+    """
+    SensLI methodfor CNNs.
+
+    Parameters:
+    epochs (list of int): Number of epochs to train the model.
+    traindataloader (DataLoader): DataLoader for the training data.
+    testdataloader (DataLoader): DataLoader for the test data.
+    BN (bool): Whether to use Batch Normalization. Default is False. Not everything is supported for BatchNorm. Use only if you know the code.
+    optimizer_type (str): Type of optimizer to use ('SGD' or 'Adam'). Default is 'SGD'.
+    lr_init (float): Initial learning rate. Default is 0.1.
+    mode (str): Mode for layer insertion. Default is 'abs max'. 'thresold_rel' is used for the when-to-insert-heuristic.
+    stopping_criterion (callable): Function to determine when to stop training. Default is None.  Not implemented yet.
+    lrschedule_type (str): Type of learning rate scheduler ('StepLR', 'MultiStepLR', 'ReduceLROnPlateau'). Default is 'StepLR'.
+    lrscheduler_args (dict): Arguments for the learning rate scheduler. Default is None.
+    decrease_lr_after_li (float): Factor to decrease learning rate after layer insertion. Default is 1.0.
+    save_grad_norms (bool): Whether to save gradient norms. Default is True.
+    init (Tensor): Initial parameters for the model as vector. Default is None.
+    use_kfac (bool): Whether to use KFAC optimizer. Default is False. not fully supported in the code. Use only if you know the code.
+    sens_norm (str): Sensitivity normalization method. Default is 'all'.
+    architecture (str): Model architecture ('VGG' or 'VGGsmall'). Default is 'VGG'.
+    m (list): List of integers specifying the number of filters in each layer. Default is [64, 128, 256].
+    max_LIs (int): Maximum number of layer insertions. Default is 1.
+
+    Returns:
+    Res object of class ResultLI: Result object containing all relevant information.
+    """
     
     if BN==True and use_kfac==True:
         raise NotImplementedError('combination of Batchnorm and KFAC not implemented')
